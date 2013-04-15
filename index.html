@@ -31,35 +31,39 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h1>Facebook Group Search</h1>
+        <h1><a href="http://salbahra.github.io/Facebook-Group-Search/">Facebook Group Search</a></h1>
 
 <p>Combination of an export script and front end. The exporter grabs Facebook group information and imports it to MySQL. The frontend boilerplate supports searching the database on both desktop and mobile.</p>
 
 <h2>Instructions:</h2>
 
-<p>You should first setup import.php.</p>
+<ul>
+<li>
+<p>You first need to get your Facebook group ID (GID) and access token (for open groups a no-expire application token can be used).</p>
 
-<p>You first need to get your Facebook group ID (GID) and access token (for open groups a nonexpire token can be used).</p>
-
-<p>Fill in the MySQL information, GID, and access token in config.php.</p>
-
-<p>Attempt to run the script in console: php import.php. If all goes to plan your MySQL should be populated.</p>
-
+<ul>
+<li>More information <a href="https://developers.facebook.com/docs/opengraph/howtos/publishing-with-app-token/">can be found here</a>
+</li>
+</ul>
+</li>
+<li><p>Fill in the MySQL information, GID, and access token in config.php.</p></li>
+<li><p>Attempt to run the script in console: php import.php. If all goes to plan your MySQL should be populated.</p></li>
+<li>
 <p>Add the import to crontab every minute to ensure your database is up to date with Facebook by adding:</p>
 
-<blockquote>
-<p>0 * * * * php /var/www/import.php &gt;/dev/null 2&gt;&amp;1</p>
-</blockquote>
-
-<p>From there you may attempt to load the front end which searchs the same database and uses the same config.</p>
-
-<h2>Known Problems:</h2>
+<ul>
+<li><code>0 * * * * php /var/www/import.php &gt;/dev/null 2&gt;&amp;1</code></li>
+</ul>
+</li>
+<li><p>From there you may attempt to load the front end which searchs the same database and uses the same config.</p></li>
+</ul><h2>Known Problems:</h2>
 
 <p>The main.js file contains the word gid in the link back to Facebook when in reality it should be the group ID. This was hardcoded before and needs to be automatic.</p>
 
 <h2>Disclaimer:</h2>
 
-<p>This has not been tested yet and is slowly being migrated from a working copy sans specific information for that use.</p>
+<p>This has not been tested yet and is slowly being migrated from a working copy sans specific information for that use.
+<a href="http://githalytics.com/salbahra/Facebook-Group-Search"><img src="https://cruel-carlota.pagodabox.com/e5cc4d27f7ebaa5a2d81276f31b2f9ae" alt="githalytics.com alpha" title="githalytics.com"></a></p>
       </section>
     </div>
 
