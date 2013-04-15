@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Facebook-group-search by salbahra</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Facebook-group-search</h1>
+        <p>Combination of an export script and front end. The exporter grabs Facebook group information and imports it to MySQL. The frontend boilerplate supports both desktop and mobile. Original project at http://albahra.com/fb</p>
+
+        <p class="view"><a href="https://github.com/salbahra/Facebook-Group-Search">View the Project on GitHub <small>salbahra/Facebook-Group-Search</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/salbahra/Facebook-Group-Search/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/salbahra/Facebook-Group-Search/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/salbahra/Facebook-Group-Search">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Facebook-Group-Search</h1>
+
+<p>Combination of an export script and front end. The exporter grabs Facebook group information and imports it to MySQL. The frontend boilerplate supports both desktop and mobile.</p>
+
+<h2>Instructions:</h2>
+
+<p>You should first setup import.php.</p>
+
+<p>You first need to get your Facebook group ID (GID) and access token (for open groups a nonexpire token can be used).</p>
+
+<p>Fill in the MySQL information, GID, and access token in config.php.</p>
+
+<p>Attempt to run the script in console: php import.php. If all goes to plan your MySQL should be populated.</p>
+
+<p>Add the import to crontab every minute to ensure your database is up to date with Facebook by adding:</p>
+
+<blockquote>
+<p>0 * * * * php /var/www/import.php &gt;/dev/null 2&gt;&amp;1</p>
+</blockquote>
+
+<p>From there you may attempt to load the front end which searchs the same database and uses the same config.</p>
+
+<h2>Known Problems:</h2>
+
+<p>The main.js file contains the word gid in the link back to Facebook when in reality it should be the group ID. This was hardcoded before and needs to be automatic.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/salbahra">salbahra</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-40111352-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
