@@ -1,7 +1,6 @@
 //Set global variables (name describes them)
-var killScroll = true;
 var pastIntro = false;
-//var nextOff = true;
+
 //Onload
 $(function(){
 	update();
@@ -9,16 +8,6 @@ $(function(){
 	$('#header,#aboutlink,#feedbacklink').fadeIn(1000);
 	$("#search").focus();
 });
-//Detect scrolling towards the bottom of the page (infinity rows)
-//$(window).scroll(function(){
-//	//If the window is 200 pixels from the bottom then lets get more
-//	if  ($(window).scrollTop()+200 >= ($(document).height() - ($(window).height()))){
-//		getnext();
-//	};
-//});
-//Keybinds
-//$(document).bind("keydown", function(e){if (String.fromCharCode(e.keyCode) == "M") {if (!$(":focus").length) getnext(); }});
-//Detect a window resize
 $(window).resize(function(){
 	update();
 	if ($("#about").length) {
@@ -120,38 +109,9 @@ function get() {
 		$("#content").fadeIn("fast");
 		$("#header").fadeIn("fast");
 		chkbor();
-		//Change global variables to enable infinity scrolling and header automatic resizing
-		killScroll = false;
 		pastIntro = true;
-//		nextOff = false;
 	}, 'json');
 };
-/*
-function getnext(){
-	//If getnext is disabled return
-	if (nextOff) return;
-	//If were past the intro AND scrolling is enabled then continue
-	if (pastIntro == true && killScroll == false) {
-		//Prevent further triggering until we are done
-		killScroll = true;
-		//Fade the loading screen in
-		$("#loading").fadeIn();
-		//AJAX request for more rows
-		_gaq.push(['_trackPageview', '/fb/?next=1&action=search']);
-		$.post("index.php","next=1&action=search",function(results){
-			//If the array is empty then prevent further getnext requests
-			if ($.isEmptyObject(results[0]) && $.isEmptyObject(results[1])) { $("#loading").fadeOut("fast"); nextOff = true; killScroll = false; return; }
-			inject(results);
-			$("#loading").fadeOut("fast");
-			chkbor("posts"); chkbor("comments");
-			//Allow scrolling to fetch more rows again
-			killScroll = false;
-		}, 'json');
-	}
-};
-*/
-
-//Lots of hardcoded group numbers that need to be fixed...
 function inject(results) {
 	//Cycle through each new row
 	var posts = '';
@@ -244,22 +204,3 @@ function submit_feedback(){
 function fixbg_ie7() {
 	if ($.browser.msie  && parseInt($.browser.version, 10) === 7) { $("#background").css({"margin-left":$("#header").width() / 2 + "px"}); }
 };
-/*
-window.onpopstate = function(e){
-	console.log(e.state);
-  if (e.state == null) {
-  	window.history.pushState('', 'Rossie Rotation Advice', '/fb/index.php');
-	return;
-  }
-  if (e.state.s == null) {
-	$("#search").val('');
-	pastIntro = false;
-	$("#header").css({"position":"absolute","top":"50%"});
-	update();
-	$("#content").hide();
-	$("#search").focus();
-	return;
-  }
-  $("#search").val(event.state.s); get();
-};  
-*/
