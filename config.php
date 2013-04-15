@@ -2,10 +2,6 @@
 
 //Settings
 
-//Facebook application ID
-$app_id = '';
-//Facebook application secret
-$app_secret = '';
 //Facebook group ID
 $gid = '';
 //Website URL
