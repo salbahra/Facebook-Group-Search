@@ -1,4 +1,4 @@
-Facebook-Group-Search
+[Facebook-Group-Search](http://salbahra.github.io/Facebook-Group-Search/)
 =====================
 
 Combination of an export script and front end. The exporter grabs Facebook group information and imports it to MySQL. The frontend boilerplate supports both desktop and mobile.
