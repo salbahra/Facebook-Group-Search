@@ -1,7 +1,7 @@
 <?php
 
   require_once "config.php";
- 
+
   //Intialize array
   $results = array();
   //Get the current time including microseconds
@@ -22,6 +22,13 @@
     exit();
   }
   
+  //Check if tables exist
+  $needed = array("fb_posts","fb_comments","fb_users");
+  foreach ($needed as $value) {
+    $result = $mysqli->query("SHOW TABLES LIKE '".$value."'");
+    if ($result->num_rows == 0) create_tables();
+  }
+
   //Get the newest post in MySQL
   $result = $mysqli->query("SELECT post_time FROM fb_posts ORDER BY post_time DESC LIMIT 1")->fetch_assoc();
   //Store the posts creation time to compare against Facebook
@@ -116,5 +123,40 @@
   $user_stmt->close();
   $mysqli->close();
   exit();
+
+function create_tables() {
+  global $mysqli;
+
+  $tables = "CREATE TABLE IF NOT EXISTS `fb_comments` (
+  `comment_id` bigint(18) NOT NULL,
+  `post_id` bigint(18) NOT NULL,
+  `user_id` int(12) NOT NULL,
+  `comment_body` longtext NOT NULL,
+  `comment_time` int(11) NOT NULL,
+  `likes` smallint(6) NOT NULL,
+  UNIQUE KEY `comment_id` (`comment_id`),
+  KEY `user_id` (`user_id`),
+  FULLTEXT KEY `comment_body` (`comment_body`)
+  ) ENGINE=MyISAM DEFAULT CHARSET=utf8;"
+    . "CREATE TABLE IF NOT EXISTS `fb_posts` (
+  `post_id` bigint(18) NOT NULL,
+  `user_id` int(12) NOT NULL,
+  `post_body` longtext NOT NULL,
+  `post_time` int(11) NOT NULL,
+  `num_comments` smallint(6) NOT NULL,
+  `likes` smallint(6) NOT NULL,
+  UNIQUE KEY `post_id` (`post_id`),
+  KEY `user_id` (`user_id`),
+  FULLTEXT KEY `post_body` (`post_body`)
+  ) ENGINE=MyISAM DEFAULT CHARSET=utf8;"
+    . "CREATE TABLE IF NOT EXISTS `fb_users` (
+  `user_id` int(12) NOT NULL COMMENT 'User ID',
+  `user_name` varchar(100) NOT NULL COMMENT 'User Full Name',
+  UNIQUE KEY `user_id` (`user_id`)
+  ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+
+  $result = $mysqli->query($tables);
+}
+
 
 ?>
