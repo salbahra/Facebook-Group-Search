@@ -29,3 +29,4 @@ Disclaimer:
 -----------
 
 This has not been tested yet and is slowly being migrated from a working copy sans specific information for that use.
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/e5cc4d27f7ebaa5a2d81276f31b2f9ae "githalytics.com")](http://githalytics.com/salbahra/Facebook-Group-Search)
