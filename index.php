@@ -4,7 +4,7 @@
 if(!isset($_SESSION)) session_start(); 
 
 #Check if mobile
-require_once 'mobile_detect.php';
+require_once 'mobiledetect/Mobile_Detect.php';
 $detect = new Mobile_Detect();
 $layout = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'mobile') : 'desktop');
 
