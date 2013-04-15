@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>Rossie Rotation Advice</title>
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map_canvas { height: 100% }
+    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=APIKEY&sensor=false">
+    </script>
+    <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js"></script>
+    <script type="text/javascript">
+	var infoWindow = new google.maps.InfoWindow;
+        var allMarkers = [];
+        var justMarkers = [];
+        $(document).on('input',"#map-search",function(){
+            if (!$(this).val().length) {
+                filter($(this).val());
+                window.map.setOptions({center: new google.maps.LatLng(39.810646,-98.556976),
+                    zoom: 4
+                });
+            }
+            if ($(this).val().length > 1) filter($(this).val());
+        });
+	function initialize() {
+                var styles = [
+                    {
+                        featureType: 'road',
+                        elementType: 'geometry',
+                        stylers: [{'visibility': 'simplified'}]
+                    }, {
+                        featureType: 'road.arterial',
+                        stylers: [
+                        {hue: 149},
+                        {saturation: -78},
+                        {lightness: 0}
+                        ]
+                    }, {
+                        featureType: 'road.highway',
+                        stylers: [
+                        {hue: -31},
+                        {saturation: -40},
+                        {lightness: 2.8}
+                        ]
+                    }, {
+                        featureType: 'poi',
+                        elementType: 'label',
+                        stylers: [{'visibility': 'off'}]
+                    }, {
+                        featureType: 'landscape',
+                        stylers: [
+                        {hue: 163},
+                        {saturation: -26},
+                        {lightness: -1.1}
+                        ]
+                    }, {
+                        featureType: 'transit',
+                        stylers: [{'visibility': 'off'}]
+                    }, {
+                        featureType: 'water',
+                        stylers: [
+                        {hue: 3},
+                        {saturation: -24.24},
+                        {lightness: -38.57}
+                        ]
+                    }
+                ];
+		var myOptions = {
+			center: new google.maps.LatLng(39.810646,-98.556976),
+			zoom: 4,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        styles: styles
+		};
+		var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
+                //Global the map
+                window.map = map;
+
+		google.maps.event.addListener(map, 'click', function(){
+			infoWindow.close();
+		});
+		$.getJSON("data.php",function(data){
+                    var coordinates_hash = new Array();
+                    var coordinates_str, actual_lat, actual_lon, adjusted_lat, adjusted_lon;
+			$.each(data,function(i,l){
+                            actual_lat = adjusted_lat = l.lat;
+                            actual_lon = adjusted_lon = l.lng;
+                            coordinates_str = actual_lat + actual_lon;
+                            while (coordinates_hash[coordinates_str] != null) {
+                                // adjust coord by 50m or so
+                                adjusted_lat = parseFloat(actual_lat) + (Math.random() -.5) / 750;
+                                adjusted_lon = parseFloat(actual_lon) + (Math.random() -.5) / 750;
+                                coordinates_str = String(adjusted_lat) + String(adjusted_lon);
+                            }
+                            coordinates_hash[coordinates_str] = 1;
+                            l.lat = adjusted_lat;
+                            l.lng = adjusted_lon;                            
+                            createMarker(map,l);
+			});
+                        newCluster();
+		});
+	}
+        function newCluster() {
+            if (typeof window.mc != 'undefined') {
+                window.mc.clearMarkers();
+            }
+            var mc = new MarkerClusterer(window.map, justMarkers, {
+                maxZoom: 10
+            });
+            //Save handle to map globally
+            window.mc = mc;
+        }
+	function createMarker(map,data) {
+		var marker = new google.maps.Marker({
+			position: new google.maps.LatLng(data.lat,data.lng),
+			map: map
+		});
+                allMarkers.push({ point: marker, content: data.message});
+                justMarkers.push(marker);
+		google.maps.event.addListener(marker, 'click', function() {
+			infoWindow.close();
+			_gaq.push(['_trackEvent', 'Markers', 'Open', data.id]);
+			html = createInfoWindow(data);
+			infoWindow = new google.maps.InfoWindow({content: html});
+			infoWindow.open(map, marker);
+		});
+	}
+	function createInfoWindow(data) {
+		return "<p>" + data.message + "<br><br>" +
+			"<span>Original post: <a target=\"_blank\" href=\"https://www.facebook.com/groups/grpid/permalink/" + data.id + "\">Here</a></span><br>" +
+			"<span>Created On: " + data.time +
+			"</span></p>";
+	}
+        function filter(needle) {
+            var bounds = new google.maps.LatLngBounds ();
+            var pointCount = 0;
+            var map = window.map;
+            justMarkers = [];
+
+            if (allMarkers) {
+                for (var i = 0, marker; marker = allMarkers[++i]; ) {
+                    if(marker.content.toLowerCase().indexOf(needle.toLowerCase()) >= 0){
+                        marker.point.setVisible(true);
+                        bounds.extend(marker.point.position);
+                        justMarkers.push(marker.point);
+                        pointCount++;
+                    }else{
+                        marker.point.setVisible(false);
+                    }
+                }
+                if (pointCount > 1) {
+                    map.fitBounds(bounds);
+                    var listener = google.maps.event.addListener(map, "idle", function() { 
+                        if (map.getZoom() > 12) map.setZoom(12); 
+                        google.maps.event.removeListener(listener); 
+                    });
+                }
+                else if (pointCount == 1) {
+                    map.setCenter(bounds.getCenter());
+                    map.setZoom(12);
+                } 
+                newCluster();
+            }
+        }
+  </script>
+  </head>
+  <body onload="initialize()">
+      <div style="color: #E0E0E0;border: 15px solid #303030;opacity: 0.9;-moz-box-shadow: 5px 5px 5px #3D3D3D;-webkit-box-shadow: 5px 5px 5px #3D3D3D;box-shadow: 5px 5px 5px #3D3D3D;padding:5px;text-align:center;z-index:1;margin: 0 0 0 -20%;position:fixed;top:10px;left:50%;width:40%;height:15px;background-color:#303030">
+          <input id="map-search" style="width:95%;font-size:14px;top:50%;margin-top:-30px" placeholder="Filter by..." name="search" type="text" maxlength=255>
+      </div>
+    <div id="map_canvas" style="width:100%; height:100%"></div>
+  </body>
+</html>
