@@ -1,0 +1,3 @@
+[submodule "mobiledetect"]
+	path = mobiledetect
+	url = https://github.com/serbanghita/Mobile-Detect.git
