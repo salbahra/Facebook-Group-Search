@@ -30,7 +30,7 @@
   */ 
   $int = 7776000;
   //Set the HTTP header info
-  $opts = array('http'=>array('header' => "User-Agent:RossAdvice/1.0\r\n"));
+  $opts = array('http'=>array('header' => "User-Agent:FBExport/1.0\r\n"));
   $context = stream_context_create($opts);
   
   //Connect to MySQL
