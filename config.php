@@ -14,6 +14,20 @@ $user = '';
 $pass = '';
 //MySQL database
 $db = '';
+
+/*
+Override setting forces the import to grab ALL posts from Facebook starting with the very first one.
+Setting override to 0 disables that and scans from the newest post in MySQL to the newest available.
+The reason for this setting is to allow comments to be updated from previous posts.
+
+Unless your group is VERY large you should be okay running this every 1 minutes
+*/
+$override = 1;
+
+//Facebook Access token in the form of 'access_token=token'
+$access_token = 'access_token=';
+
+
 //End of settings
 
 //Set denied message
