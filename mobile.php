@@ -21,8 +21,6 @@ if (isset($_REQUEST['action']) && !isset($_SESSION['reget'])) callfunc($_REQUEST
 	<style type="text/css">#new a:link,#new a:visited{color:#303030}.wrap{white-space:normal}.center{text-align: center}</style>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=APIKEY&sensor=false"></script>
-    <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js"></script>
 	<script>
 		(function(){
 			var p, l, r = window.devicePixelRatio;
@@ -59,7 +57,6 @@ if (isset($_REQUEST['action']) && !isset($_SESSION['reget'])) callfunc($_REQUEST
 	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class=".ui-bar" style="text-align:center">
             <div data-role="controlgroup" data-type="horizontal">
                 <a data-icon="search" data-theme="a" data-role="button" class="ui-btn-active ui-state-persist" href="#start">Search</a>
-                <a data-icon="grid" data-theme="a" data-role="button" href="#mapview" data-transition="fade">Map</a>
                 <a data-icon="info" data-theme="a" data-role="button" href="#about" data-transition="fade">About</a>
             </div>
 	</div>
@@ -78,27 +75,9 @@ if (isset($_REQUEST['action']) && !isset($_SESSION['reget'])) callfunc($_REQUEST
             <div data-role="controlgroup" data-type="horizontal">
                 <a data-icon="search" data-theme="a" data-role="button" data-direction="reverse" href="#start">Search</a>
                 <a data-role="button" data-theme="a" class="ui-btn-active ui-state-persist" data-direction="reverse" href="#results">Results</a>
-                <a data-icon="grid" data-theme="a" data-role="button" href="#mapview" data-transition="fade">Map</a>
                 <a data-icon="info" data-theme="a" data-role="button" href="#about" data-transition="fade">About</a>
             </div>
 	</div>
-</div>
-
-<!-- Start of map page -->
-<div data-role="page" id="mapview" style="width:100%; height:100%;">
-	<div data-role="header">
-            <input type="search" name="map-search" placeholder="Filter by..." id="map-search" value="" />
-        </div>
-	<div data-role="content" style="width:100%; height:100%; padding:0;"> 
-		<div id="map_canvas"></div>
-	</div>
-    	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class=".ui-bar" style="text-align:center">
-            <div data-role="controlgroup" data-type="horizontal">
-                <a data-icon="search" data-theme="a" data-role="button" data-transition="fade" data-direction="reverse" href="#start">Search</a>
-                <a data-icon="grid" data-theme="a" data-role="button" class="ui-btn-active ui-state-persist" href="#mapview" data-transition="fade">Map</a>
-                <a data-icon="info" data-theme="a" data-role="button" href="#about" data-transition="fade">About</a>
-            </div>
-        </div>
 </div>
 
 <!-- Start of about page -->
@@ -130,7 +109,6 @@ if (isset($_REQUEST['action']) && !isset($_SESSION['reget'])) callfunc($_REQUEST
 	<div data-role="footer" data-position="fixed" data-tap-toggle="false" class=".ui-bar" style="text-align:center">
             <div data-role="controlgroup" data-type="horizontal">
                 <a data-icon="search" data-theme="a" data-role="button" data-transition="fade" data-direction="reverse" href="#start">Search</a>
-                <a data-icon="grid" data-theme="a" data-role="button" href="#mapview" data-transition="fade" data-direction="reverse">Map</a>
                 <a data-icon="info" data-theme="a" data-role="button" class="ui-btn-active ui-state-persist" href="#about">About</a>
             </div>
 	</div>

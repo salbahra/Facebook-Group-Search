@@ -54,8 +54,7 @@ function chkbor() {
 //Random news
 function new_item() {
     var news = [
-        "Try the <a target='_blank' href='/map/'>updated map view</a>!",
-        "Advanced: Search by user, hospital, city and state ex: <a href=\"javascript:link('elective hospital:(union)');\">elective hospital:(union)</a>"
+        "Advanced: Search by user ex: <a href=\"javascript:link('funny user:(louis)');\">funny user:(louis)</a>"
     ];
     var i = Math.floor((Math.random()*news.length));
     $("#new").html(news[i]);

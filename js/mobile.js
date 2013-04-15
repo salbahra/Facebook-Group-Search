@@ -2,9 +2,6 @@
 var killScroll = true;
 var pastIntro = false;
 //var nextOff = true;
-var infoWindow = new google.maps.InfoWindow;
-var allMarkers = [];
-var justMarkers = [];
 /*
 //Detect scrolling towards the bottom of the page (infinity rows)
 $(window).scroll(function(){
@@ -43,47 +40,15 @@ $(document).on("pageshow", "#start", function () {
 	//killScroll = true; pastIntro = false; //nextOff = true;
         new_item();
 });
-$(document).on("pageshow", "#start, #about, #mapview", function () {
+$(document).on("pageshow", "#start, #about", function () {
         var page = '#' + $('.ui-page-active').attr('id');
         $(page + ' div[data-role="controlgroup"] a').button();
         $(page + ' div[data-role="controlgroup"]').controlgroup();
-});
-$(document).on("pageshow", "#mapview", function () {
-	if (!window.map) {
-		$.mobile.loading( 'show' );
-		set_map();
-		initialize();
-	} else {
-		google.maps.event.trigger(window.map, 'resize');
-	}
-});
-$(document).bind("orientationchange", function(){ 
-    set_map();
-    google.maps.event.trigger(window.map, 'resize'); 
 });
 $(document).on("pageshow", "#showpost", function () {
 	killScroll = true;
 	//Refresh list each time comments or posts are loaded
 });
-$(document).on('input',"#map-search",function(){
-    if (!$(this).val().length) {
-        filter($(this).val());
-        window.map.setOptions({center: new google.maps.LatLng(39.810646,-98.556976),
-            zoom: get_zoom()
-        });
-    }
-    if ($(this).val().length > 1) filter($(this).val());
-});
-$("#mapview").on('click', '.ui-input-clear', function(e){
-    filter("");
-    window.map.setOptions({center: new google.maps.LatLng(39.810646,-98.556976),
-        zoom: get_zoom()
-    });
-});
-function set_map() {
-	$("#map_canvas").height($(window).height() - ($('[data-role=header]').last().height() + $('[data-role=footer]').last().height()));
-	$("#map_canvas").width($(window).width());
-}
 function link(query) {
     $("#search").val(query);
     get();
@@ -91,8 +56,7 @@ function link(query) {
 //Random news
 function new_item() {
     var news = [
-        "Try the <a href=\"#mapview\">updated map view</a>!",
-        "Advanced: Search by user, hospital, city and state ex: <a href=\"javascript:link('elective hospital:(union)');\">elective hospital:(union)</a>"
+        "Advanced: Search by user ex: <a href=\"javascript:link('funny user:(louis)');\">funny user:(louis)</a>"
     ];
     var i = Math.floor((Math.random()*news.length));
     $("#new").html(news[i]);
@@ -119,7 +83,7 @@ function get() {
 		//Inject results into the DOM
 		inject(results);
                 //Show results tab on other pages
-                pages = ["#about","#start","#mapview"];
+                pages = ["#about","#start"];
                 $.each(pages,function(a,b){
                     if (!pastIntro) {
                         $(b + ' a[href="#start"]').after('<a data-role="button" data-theme="a" data-transition="fade" href="#results">Results</a>').trigger('create');
@@ -210,158 +174,3 @@ function submit_feedback(){
     });
     $.post("index.php", data);
 };
-
-function get_zoom() {
-	if ((navigator.platform.indexOf("iPhone") != -1) || (navigator.platform.indexOf("iPod") != -1)) {
-		return 3;
-	} else {
-		return 4;
-	}
-};
-function initialize() {
-    var styles = [
-        {
-            featureType: 'road',
-            elementType: 'geometry',
-            stylers: [{'visibility': 'simplified'}]
-        }, {
-            featureType: 'road.arterial',
-            stylers: [
-            {hue: 149},
-            {saturation: -78},
-            {lightness: 0}
-            ]
-        }, {
-            featureType: 'road.highway',
-            stylers: [
-            {hue: -31},
-            {saturation: -40},
-            {lightness: 2.8}
-            ]
-        }, {
-            featureType: 'poi',
-            elementType: 'label',
-            stylers: [{'visibility': 'off'}]
-        }, {
-            featureType: 'landscape',
-            stylers: [
-            {hue: 163},
-            {saturation: -26},
-            {lightness: -1.1}
-            ]
-        }, {
-            featureType: 'transit',
-            stylers: [{'visibility': 'off'}]
-        }, {
-            featureType: 'water',
-            stylers: [
-            {hue: 3},
-            {saturation: -24.24},
-            {lightness: -38.57}
-            ]
-        }
-    ];
-    var myOptions = {
-            center: new google.maps.LatLng(39.810646,-98.556976),
-            zoom: get_zoom(),
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            styles: styles
-    };
-    //Intialize the map
-    var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
-    //Global the map
-    window.map = map;
-    //If the map is clicked on then close any infowindows that might be open
-    google.maps.event.addListener(map, 'click', function(){
-            infoWindow.close();
-    });
-    //Get the marker data from server and show it on the map
-    $.getJSON("/map/data.php",function(data){
-        var coordinates_hash = new Array();
-        var coordinates_str, actual_lat, actual_lon, adjusted_lat, adjusted_lon;
-            $.each(data,function(i,l){
-                actual_lat = adjusted_lat = l.lat;
-                actual_lon = adjusted_lon = l.lng;
-                coordinates_str = actual_lat + actual_lon;
-                while (coordinates_hash[coordinates_str] != null) {
-                    // adjust coord by 50m or so
-                    adjusted_lat = parseFloat(actual_lat) + (Math.random() -.5) / 750;
-                    adjusted_lon = parseFloat(actual_lon) + (Math.random() -.5) / 750;
-                    coordinates_str = String(adjusted_lat) + String(adjusted_lon);
-                }
-                coordinates_hash[coordinates_str] = 1;
-                l.lat = adjusted_lat;
-                l.lng = adjusted_lon;
-                createMarker(map,l);
-            });
-            newCluster();
-    });
-    //When the map is idle remove the loading message (since map is loaded via AJAX need to bind)
-    google.maps.event.addListener(map, 'idle', function() {
-            $.mobile.loading( 'hide' );
-    });
-};
-function newCluster() {
-    if (typeof window.mc != 'undefined') {
-        window.mc.clearMarkers();
-    }
-    var mc = new MarkerClusterer(window.map, justMarkers, {
-        maxZoom: 10
-    });
-    //Save handle to map globally
-    window.mc = mc;
-}
-function createMarker(map,data) {
-	var marker = new google.maps.Marker({
-		position: new google.maps.LatLng(data.lat,data.lng),
-		map: map
-	});
-        allMarkers.push({ point: marker, content: data.message});
-        justMarkers.push(marker);
-	//If a marker is clicked show the appropriate infowindow
-	google.maps.event.addListener(marker, 'click', function() {
-		infoWindow.close();
-		_gaq.push(['_trackEvent', 'Markers', 'Open', data.id]);
-		html = createInfoWindow(data);
-		infoWindow = new google.maps.InfoWindow({content: html});
-		infoWindow.open(map, marker);
-	});
-};
-function createInfoWindow(data) {
-	//Return the appropriate contents to show inside the infowindow
-	return "<p>" + data.message + "<br><br>" +
-		"<span>Original post: <a data-transition='slideup' data-rel='dialog' href='mobile.php?action=showpost&id=" + data.id + "'>Here</a></span><br>" +
-		"<span>Created On: " + data.time +
-		"</span></p>";
-};
-function filter(needle) {
-    var bounds = new google.maps.LatLngBounds ();
-    var pointCount = 0;
-    var map = window.map;
-    justMarkers = [];
-    
-    if (allMarkers) {
-        for (var i = 0, marker; marker = allMarkers[++i]; ) {
-            if(marker.content.toLowerCase().indexOf(needle.toLowerCase()) >= 0){
-                marker.point.setVisible(true);
-                bounds.extend(marker.point.position);
-                justMarkers.push(marker.point);
-                pointCount++;
-            }else{
-                marker.point.setVisible(false);
-            }
-        }
-        if (pointCount > 1) {
-            map.fitBounds(bounds);
-            var listener = google.maps.event.addListener(map, "idle", function() { 
-                if (map.getZoom() > 12) map.setZoom(12); 
-                google.maps.event.removeListener(listener); 
-            });
-        }
-        else if (pointCount == 1) {
-            map.setCenter(bounds.getCenter());
-            map.setZoom(12);
-        } 
-        newCluster();
-    }
-}
