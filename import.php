@@ -26,7 +26,10 @@
   $needed = array("fb_posts","fb_comments","fb_users");
   foreach ($needed as $value) {
     $result = $mysqli->query("SHOW TABLES LIKE '".$value."'");
-    if ($result->num_rows == 0) create_tables();
+    if ($result->num_rows == 0) {
+      create_tables();
+      break;
+    }
   }
 
   //Get the newest post in MySQL
