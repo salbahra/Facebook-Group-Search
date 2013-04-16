@@ -12,7 +12,7 @@ Instructions:
 + Download the files
   + ```cd /var/www/```
   + ```git clone https://github.com/salbahra/Facebook-Group-Search.git fb```
-  + ```git clone git clone https://github.com/serbanghita/Mobile-Detect.git fb/mobiledetect```
+  + ```git clone https://github.com/serbanghita/Mobile-Detect.git fb/mobiledetect```
 
 + Fill in the MySQL information, GID, and access token in config.php.
   + ```nano /var/www/fb/config.php```
