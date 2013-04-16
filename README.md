@@ -11,18 +11,18 @@ Instructions:
 
 + Download the files
   + ```cd /var/www/```
-  + ```git clone https://github.com/salbahra/Facebook-Group-Search.git```
-  + ```git clone git clone https://github.com/serbanghita/Mobile-Detect.git Facebook-Group-Search/mobiledetect```
+  + ```git clone https://github.com/salbahra/Facebook-Group-Search.git fb```
+  + ```git clone git clone https://github.com/serbanghita/Mobile-Detect.git fb/mobiledetect```
 
 + Fill in the MySQL information, GID, and access token in config.php.
-  + ```nano /var/www/Facebook-Group-Search/config.php```
+  + ```nano /var/www/fb/config.php```
 
 + Attempt to run the script in console:
-  + ```php import.php```
+  + ```php /var/www/fb/import.php```
   + If all goes to plan your MySQL should be populated
 
 + Add the import to crontab every minute to ensure your database is up to date with Facebook by adding:
-  + ```0 * * * * php /var/www/import.php >/dev/null 2>&1```
+  + ```0 * * * * php /var/www/fb/import.php >/dev/null 2>&1```
 
 + From there you may attempt to load the front end which searchs the same database and uses the same config
 
