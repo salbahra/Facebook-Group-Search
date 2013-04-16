@@ -46,16 +46,38 @@
 </li>
 </ul>
 </li>
-<li><p>Fill in the MySQL information, GID, and access token in config.php.</p></li>
-<li><p>Attempt to run the script in console: php import.php. If all goes to plan your MySQL should be populated.</p></li>
+<li>
+<p>Download the files</p>
+
+<ul>
+<li><code>cd /var/www/</code></li>
+<li><code>git clone https://github.com/salbahra/Facebook-Group-Search.git fb</code></li>
+<li><code>git clone https://github.com/serbanghita/Mobile-Detect.git fb/mobiledetect</code></li>
+</ul>
+</li>
+<li>
+<p>Fill in the MySQL information, GID, and access token in config.php.</p>
+
+<ul>
+<li><code>nano /var/www/fb/config.php</code></li>
+</ul>
+</li>
+<li>
+<p>Attempt to run the script in console:</p>
+
+<ul>
+<li><code>php /var/www/fb/import.php</code></li>
+<li>If all goes to plan your MySQL should be populated</li>
+</ul>
+</li>
 <li>
 <p>Add the import to crontab every minute to ensure your database is up to date with Facebook by adding:</p>
 
 <ul>
-<li><code>0 * * * * php /var/www/import.php &gt;/dev/null 2&gt;&amp;1</code></li>
+<li><code>0 * * * * php /var/www/fb/import.php &gt;/dev/null 2&gt;&amp;1</code></li>
 </ul>
 </li>
-<li><p>From there you may attempt to load the front end which searchs the same database and uses the same config.</p></li>
+<li><p>From there you may attempt to load the front end which searchs the same database and uses the same config</p></li>
 </ul><h2>Known Problems:</h2>
 
 <p>The main.js file contains the word gid in the link back to Facebook when in reality it should be the group ID. This was hardcoded before and needs to be automatic.</p>
