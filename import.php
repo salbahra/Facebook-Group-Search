@@ -90,8 +90,10 @@
       $comments = json_decode(preg_replace('/("\w+"):(\d+)/', '\\1:"\\2"', $comments), true);
       //Cycle through each comment
       foreach ($comments["data"] as $comment) {
+        //Explode the comment id which should be postid_commentid and discard the postid
+        list(,$comment_id) = explode("_",$comment["id"]);
         //Set the variables needed for comment insertion
-      	$comment_id = $comment["id"]; $user = $comment["fromid"]; $body = $comment["text"]; $time = $comment["time"]; $likes = $comment["likes"];
+      	$user = $comment["fromid"]; $body = $comment["text"]; $time = $comment["time"]; $likes = $comment["likes"];
         //Insert the current comment into the database
         $comment_stmt->execute();
       }
