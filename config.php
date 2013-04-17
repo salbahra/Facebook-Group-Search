@@ -20,7 +20,7 @@ Override setting forces the import to grab ALL posts from Facebook starting with
 Setting override to 0 disables that and scans from the newest post in MySQL to the newest available.
 The reason for this setting is to allow comments to be updated from previous posts.
 
-Unless your group is VERY large you should be okay running this every 1 minutes
+Unless your group is VERY large you should be okay running this every 1 hour
 */
 $override = 1;
 
