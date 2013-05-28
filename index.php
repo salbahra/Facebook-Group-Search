@@ -22,6 +22,7 @@ if (isset($_REQUEST['action']) && !isset($_SESSION['reget'])) callfunc($_REQUEST
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<link href="css/main.css" rel="stylesheet" media="screen" type="text/css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script><?php echo "var gid = ".$gid.";"; ?></script> 
 	<title>Group Name</title>
 </head>
 <body>
