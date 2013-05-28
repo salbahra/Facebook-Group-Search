@@ -21,7 +21,7 @@ Instructions:
   + ```php /var/www/fb/import.php```
   + If all goes to plan your MySQL should be populated
 
-+ Add the import to crontab every minute to ensure your database is up to date with Facebook by adding:
++ Add the import to crontab every hour to ensure your database is up to date with Facebook by adding:
   + ```0 * * * * php /var/www/fb/import.php >/dev/null 2>&1```
 
 + From there you may attempt to load the front end which searchs the same database and uses the same config
