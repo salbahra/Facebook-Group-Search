@@ -29,10 +29,6 @@ Instructions:
 Known Problems:
 ---------------
 
-The comments are broken due to: https://developers.facebook.com/roadmap/
-
-If you are opt'd into the July 2013 changes then you will not be able to use this app. Hopefully patched soon.
-
 The main.js file contains the word gid in the link back to Facebook when in reality it should be the group ID. This was hardcoded before and needs to be automatic.
 
 Disclaimer:
