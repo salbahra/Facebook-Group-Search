@@ -43,7 +43,7 @@
   do {
     //Construct the FQL query
     $fql_query_url = 'https://graph.facebook.com/'
-      . 'fql?q=SELECT+post_id,+actor_id,+created_time,+message,+comments,+likes+FROM+stream+WHERE+source_id='.$gid.'+AND+created_time<'.$time.'+AND+created_time>'.($time - $int).'+LIMIT+5000'
+      . 'fql?q=SELECT+post_id,+actor_id,+created_time,+message,+comment_info,+likes+FROM+stream+WHERE+source_id='.$gid.'+AND+created_time<'.$time.'+AND+created_time>'.($time - $int).'+LIMIT+5000'
       . '&' . $access_token;
     //Run the query
     $fql_query_result = file_get_contents($fql_query_url,false,$context);
@@ -72,7 +72,7 @@
     //Explode the post id which should be groupid_postid and discard the groupid
     list(,$post_id) = explode("_",$post["post_id"]);
     //Set the variables for the SQL query from the Facebook results
-    $user = $post["actor_id"]; $body = $post["message"]; $time = $post["created_time"]; $num_comments = $post["comments"]["count"]; $likes = $post["likes"]["count"];
+    $user = $post["actor_id"]; $body = $post["message"]; $time = $post["created_time"]; $num_comments = $post["comment_info"]["comment_count"]; $likes = $post["likes"]["count"];
     //Get the number of comments for the current post
     $update_stmt->execute();
     $update_stmt->bind_result($old_comments);
