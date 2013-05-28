@@ -29,7 +29,7 @@ Instructions:
 Known Problems:
 ---------------
 
-The main.js file contains the word gid in the link back to Facebook when in reality it should be the group ID. This was hardcoded before and needs to be automatic.
+None!
 
 Disclaimer:
 -----------
