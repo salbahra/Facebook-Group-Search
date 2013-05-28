@@ -117,7 +117,7 @@ function inject(results) {
 	var posts = '';
 	$.each(results[0],function(i,l){
 		posts += "<div class='posts'>" + l['post'].linkify() + "<br><br>" +
-		"<span class='nobr'>Original post: <a target=\"_blank\" href=\"https://www.facebook.com/groups/grpid/permalink/" + l['id'] + "\">Here</a></span> " +
+		"<span class='nobr'>Original post: <a target=\"_blank\" href=\"https://www.facebook.com/groups/" + gid + "/permalink/" + l['id'] + "\">Here</a></span> " +
 		"<span class='nobr'>Number of comments: " + l['comments'] + "</span> " +
 		"<span class='nobr'>Likes: " + l['likes'] + "</span> " +
 		"<span class='nobr'>Posted By: <a target=\"_blank\" href=\"https://www.facebook.com/" + l['user'] + "\">" + l['name'] + "</a></span> " +
@@ -127,7 +127,7 @@ function inject(results) {
                     posts += "<div class=\"comments\">"
                     $.each(l['comment'],function(a,b){
                         posts += "<div>" + b['post'].linkify() + "<br><br>" +
-                        "<span class='nobr'>Original post: <a target=\"_blank\" href=\"https://www.facebook.com/groups/grpid/permalink/" + b['id'] + "/?comment_id=" + b['comment_id'] + "\">Here</a></span> " +
+                        "<span class='nobr'>Original post: <a target=\"_blank\" href=\"https://www.facebook.com/groups/" + gid + "/permalink/" + b['id'] + "/?comment_id=" + b['comment_id'] + "\">Here</a></span> " +
                         "<span class='nobr'>Likes: " + b['likes'] + "</span> " +
                         "<span class='nobr'>Posted By: <a target=\"_blank\" href=\"https://www.facebook.com/" + b['user'] + "\">" + b['name'] + "</a></span> " +
                         "<span class='nobr'>Created On: " + b['time'] +
@@ -140,7 +140,7 @@ function inject(results) {
                 posts += "<h2>Comments</h2>"
                 $.each(results[1],function(a,b){
                     posts += "<div class=\"comments2\">" + b['post'].linkify() + "<br><br>" +
-		    "<span class='nobr'>Original post: <a target=\"_blank\" href=\"https://www.facebook.com/groups/grpid/permalink/" + b['id'] + "/?comment_id=" + b['comment_id'] + "\">Here</a></span> " +
+		    "<span class='nobr'>Original post: <a target=\"_blank\" href=\"https://www.facebook.com/groups/" + gid + "/permalink/" + b['id'] + "/?comment_id=" + b['comment_id'] + "\">Here</a></span> " +
                     "<span class='nobr'>Likes: " + b['likes'] + "</span> " +
                     "<span class='nobr'>Posted By: <a target=\"_blank\" href=\"https://www.facebook.com/" + b['user'] + "\">" + b['name'] + "</a></span> " +
                     "<span class='nobr'>Created On: " + b['time'] +
