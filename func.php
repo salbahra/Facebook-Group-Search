@@ -1,4 +1,6 @@
 <?php
+if (!file_exists("config.php")) header("Location: install.php"); 
+
 require_once 'config.php';
 
 date_default_timezone_set('UTC');
@@ -194,4 +196,7 @@ function deny() {
 function versions() {
     return "<p class=\"version\">Version 1.0</p><ul><li>Site is now up!</li></ul>";
 }
+
+//Set denied message
+$denied = "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\"><html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL ".$_SERVER['REQUEST_URI']." was not found on this server.</p><hr></body></html>";
 ?>
