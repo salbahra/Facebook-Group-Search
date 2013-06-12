@@ -10,7 +10,7 @@ Instructions:
   + More information [can be found here](https://developers.facebook.com/docs/opengraph/howtos/publishing-with-app-token/)
 
 + Install prerequisites as needed (example for Debian using Apache web server)
-  + ```apt-get install apache2 php5 libapache2-mod-php5 mysql-server``` 
+  + ```apt-get install apache2 php5 libapache2-mod-php5 mysql-server mysql-client php5-mysql``` 
 
 + Create the directory you wish to place the files in (ex. /var/www/fb for http://yourwebsite/fb)
   + ```mkdir -m 777 /var/www/fb```
