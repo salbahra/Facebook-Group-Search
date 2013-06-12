@@ -99,7 +99,7 @@ function fail() {
                         <li data-role="list-divider">Facebook Group Information</li>
                         <li>
                             <div data-role="fieldcontain">
-                                <label for="username">Group ID:</label>
+                                <label for="gid">Group ID:</label>
                                 <input type="text" name="gid" id="gid" value="" />
                                 <label for="access_token">Access Token:</label>
                                 <input type="text" name="access_token" id="access_token" value="" />                                
