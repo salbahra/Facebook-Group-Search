@@ -20,5 +20,3 @@ Instructions:
   + ```git clone https://github.com/serbanghita/Mobile-Detect.git /var/www/fb/mobiledetect```
 
 + From there you may attempt to access the front end.
-
-[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/e5cc4d27f7ebaa5a2d81276f31b2f9ae "githalytics.com")](http://githalytics.com/salbahra/Facebook-Group-Search)
